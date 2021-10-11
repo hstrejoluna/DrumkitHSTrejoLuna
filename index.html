@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Synthwave Drum Kit HS Trejo Luna</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="keys">
+      <div data-key="90" class="key">
+        <kbd>Z</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div data-key="67" class="key">
+        <kbd>C</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="51" class="key">
+        <kbd>3</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div data-key="50" class="key">
+        <kbd>2</kbd>
+        <span class="sound">crash</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">perc</span>
+      </div>
+
+      <div data-key="86" class="key">
+        <kbd>V</kbd>
+        <span class="sound">hitom</span>
+      </div>
+      <div data-key="66" class="key">
+        <kbd>B</kbd>
+        <span class="sound">midtom</span>
+      </div>
+      <div data-key="78" class="key">
+        <kbd>N</kbd>
+        <span class="sound">lowtom</span>
+      </div>
+    </div>
+
+    <audio data-key="90" src="sounds/Kick.wav"></audio>
+    <audio data-key="67" src="sounds/Snare.wav"></audio>
+    <audio data-key="71" src="sounds/HihatClosed.wav"></audio>
+    <audio data-key="72" src="sounds/HihatOpen.wav"></audio>
+    <audio data-key="51" src="sounds/Ride.wav"></audio>
+    <audio data-key="50" src="sounds/Crash.wav"></audio>
+    <audio data-key="86" src="sounds/Tom1.wav"></audio>
+    <audio data-key="66" src="sounds/Tom2.wav"></audio>
+    <audio data-key="78" src="sounds/Tom3.wav"></audio>
+    <audio data-key="83" src="sounds/Perc.wav"></audio>
+
+    <script>
+      function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+        if (!audio) return; // stop the function from running all together
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add("playing");
+      }
+
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return;
+        this.classList.remove("playing");
+      }
+
+      const keys = document.querySelectorAll(".key");
+      keys.forEach((key) =>
+        key.addEventListener("transitionend", removeTransition)
+      );
+      window.addEventListener("keydown", playSound);
+    </script>
+  </body>
+</html>
